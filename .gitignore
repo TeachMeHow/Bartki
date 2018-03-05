@@ -1,5 +1,7 @@
 #input and output .epp files
 *.epp
+*.run
+*.tgz
 
 #directory dir
 /dir/*
