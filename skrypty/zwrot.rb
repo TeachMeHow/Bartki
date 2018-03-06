@@ -1,19 +1,23 @@
-buf = Dir.pwd
-filename_in = buf + "/in.epp"
-filename_out = buf + "/out.epp"
-file_in = File.open(filename_in, 'r')
-file_out = File.open(filename_out, 'w')
+Dir.chdir("..")
+files = Dir.glob("*.epp")
+files.each do |x|
+  file_in = File.open(x, 'r')
+  contents = file_in.read
+  file_in.close
+  filename_in = x.gsub(/\.epp/, " - OLD.epp")
+  File.rename(x, filename_in)
+  file_out = File.open(x, 'w')
 
-#contents of the file
-contents = file_in.read
-#contents.force_encoding('UTF-8')
+#DO STH
+  regex_outer = /\"kw-faktura\",,\"zwrot\skaucji/
+  regex_inner = /kw-faktura/
+  buffer = "\"kw-faktura\",,\"zwrot kaucji"
+  buffer.gsub!(regex_inner, "KAUCJA ZWROT")
+  contents.gsub!(regex_outer, buffer)
+#DONE
 
-regex_outer = /\"kw-faktura\",,\"zwrot\skaucji/
-regex_inner = /kw-faktura/
-buffer = "\"kw-faktura\",,\"zwrot kaucji"
-buffer.gsub!(regex_inner, "KAUCJA ZWROT")
-contents.gsub!(regex_outer, buffer)
 
-file_out.puts contents
-file_in.close
-file_out.close
+  file_out.puts contents
+  file_out.close
+
+end
