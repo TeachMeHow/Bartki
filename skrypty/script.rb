@@ -1,4 +1,3 @@
-Dir.chdir("..")
 files = Dir.glob("*.epp")
 files.each do |x|
   file_in = File.open(x, 'r')
